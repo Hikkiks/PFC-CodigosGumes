@@ -2,7 +2,7 @@
 
 Esta pasta concentra os códigos e os dados utilizados no desenvolvimento, nos testes e na validação do projeto.
 
-A documentação foi dividida entre as próprias pastas para evitar duplicação de informações. As descrições das funções, dos testes, dos arquivos de entrada e das etapas de validação estão disponíveis nos respectivos arquivos `README.md`.
+A documentação foi dividida entre as próprias pastas para evitar duplicação de informações. As descrições das funções, dos testes, dos arquivos de entrada e das etapas de validação estão disponíveis nos respectivos arquivos README.
 
 ## Organização da documentação
 

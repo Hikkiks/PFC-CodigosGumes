@@ -12,7 +12,7 @@ App Design/
 ├── FunçõesApp/
 ├── Imagens/
 ├── PathLoss.mlapp
-└── READMEAppDesign.md
+└── READMEApp.md
 ```
 
 - `PathLoss.mlapp` — Aplicativo principal desenvolvido no MATLAB App Designer;
