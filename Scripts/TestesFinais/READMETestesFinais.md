@@ -1,12 +1,10 @@
 # Testes Finais
 
-Esta pasta reúne as etapas finais de preparação, varredura, seleção e validação dos filtros de gumes utilizados no projeto.
+Esta pasta reúne as etapas finais de preparação, calibração por varredura, seleção e avaliação dos filtros de gumes, além das verificações complementares realizadas com dados da NTIA.
 
-A pasta contém 13 scripts MATLAB, totalizando 5.411 linhas de código.
+A pasta contém 18 scripts MATLAB.
 
 ## Fluxo principal
-
-Os testes finais seguem, de forma geral, o fluxo:
 
 ```text
 Dados de entrada
@@ -17,53 +15,42 @@ Varredura dos filtros
         ↓
 Análise das tendências e seleção
         ↓
-Validação das configurações escolhidas
+Avaliação das configurações escolhidas
 ```
 
-As etapas de preparação armazenam cálculos que permanecem constantes durante as varreduras, evitando repetir operações como carregamento dos perfis, correção do relevo, identificação original dos gumes e preparação das geometrias para cada configuração avaliada.
+As etapas de preparação armazenam cálculos que permanecem constantes durante as varreduras, evitando a repetição de operações para cada configuração avaliada.
 
 ## Preparação e varredura
 
 | Script | Finalidade |
 |---|---|
-| `PreparacaoVarredura85.m` | Prepara os 85 perfis e os dados necessários para a varredura principal. |
-| `VarreduraFinalFiltros85.m` | Executa a varredura dos filtros sobre os 85 casos e calcula as métricas utilizadas na análise das configurações. |
-| `PreparacaoVarredura12Casos.m` | Prepara os 12 casos de campo, incluindo as condições com e sem a verificação adicional de Fresnel. |
-| `VarreduraFinalFiltros12Casos.m` | Executa a mesma grade de filtros nos 12 casos, tanto sem Fresnel quanto com Fresnel. |
+| `PreparacaoVarredura85.m` | Prepara os 85 perfis para a varredura principal. |
+| `VarreduraFinalFiltros85.m` | Executa a varredura dos filtros nos 85 casos e calcula as métricas de análise. |
+| `PreparacaoVarredura12Casos.m` | Prepara os 12 casos medidos em campo. |
+| `VarreduraFinalFiltros12Casos.m` | Executa a grade de filtros nos 12 casos e gera os rankings utilizados na seleção. |
 
-A grade final contém combinações de quatro parâmetros:
-
-- limite de `h`;
-- limite de `v`;
-- limite angular;
-- limite de distância.
-
-São avaliadas:
+A grade final combina:
 
 ```text
 46 valores de h
 18 valores de v
 17 valores de ângulo
 15 valores de distância
-```
 
-totalizando:
-
-```text
-211.140 configurações
+Total: 211.140 configurações
 ```
 
 ## Análises dos 85 casos
 
 | Script | Finalidade |
 |---|---|
-| `TesteTendenciaMAE85.m` | Analisa a tendência do MAE em função de `h`, `v` e limite angular nas configurações sem limite de distância. |
-| `TesteTendenciaGumes85.m` | Analisa a influência desses parâmetros sobre a quantidade de gumes mantidos. |
-| `TesteFiltrosSelecionados85.m` | Reexecuta e compara as quatro configurações selecionadas nos 85 perfis. |
-| `TesteComparacao85GumesIguais.m` | Avalia separadamente os casos em que a quantidade de gumes identificada coincide com a referência de Lorenço. |
-| `TesteDeygoutDavis85.m` | Compara o Deygout convencional com a correção de Causebrook e Davis nos 85 casos. |
+| `TesteTendenciaMAE85.m` | Analisa a tendência do MAE em função dos parâmetros do filtro. |
+| `TesteTendenciaGumes85.m` | Analisa a influência dos parâmetros sobre a quantidade de gumes. |
+| `TesteFiltrosSelecionados85.m` | Compara as quatro configurações selecionadas. |
+| `TesteComparacao85GumesIguais.m` | Analisa os casos com a mesma quantidade de gumes da referência de Lorenço. |
+| `TesteDeygoutDavis85.m` | Compara o Deygout convencional com a correção de Causebrook e Davis. |
 
-As quatro configurações selecionadas na análise dos 85 casos são:
+Configurações selecionadas:
 
 ```text
 206554
@@ -72,16 +59,16 @@ As quatro configurações selecionadas na análise dos 85 casos são:
 206074
 ```
 
-## Validação nos 12 casos
+## Análise dos 12 casos medidos em campo
 
 | Script | Finalidade |
 |---|---|
-| `TesteFinalSemFiltro.m` | Estabelece a condição de referência dos 12 casos antes da aplicação dos filtros. |
-| `TesteComparacao5Configuracoes12Casos.m` | Compara as quatro configurações selecionadas nos 85 casos com a configuração selecionada especificamente nos 12 casos. |
-| `TesteAnaliseRegiao67399.m` | Analisa a região de parâmetros ao redor da configuração 67399 e sua versão equivalente sem limite de distância. |
-| `TesteTendenciaFiltros12Casos.m` | Analisa as tendências de MAE e quantidade de gumes em função dos parâmetros do filtro nos 12 casos. |
+| `TesteFinalSemFiltro.m` | Analisa os 12 casos antes da aplicação dos filtros. |
+| `TesteComparacao5Configuracoes12Casos.m` | Compara as quatro configurações dos 85 casos com a configuração selecionada nos 12 casos. |
+| `TesteAnaliseRegiao67399.m` | Analisa a região ao redor da configuração 67399. |
+| `TesteTendenciaFiltros12Casos.m` | Analisa as tendências de erro e quantidade de gumes. |
 
-A quinta configuração utilizada nessa comparação é:
+A configuração selecionada especificamente nos 12 casos foi:
 
 ```text
 Configuração 67399
@@ -92,42 +79,48 @@ v = 0.09
 distância = 100 m
 ```
 
-Essa configuração foi selecionada a partir da análise específica dos 12 casos e é comparada com as quatro configurações provenientes da varredura dos 85 perfis.
+Como os próprios 12 casos foram utilizados em sua seleção, esse resultado não constitui uma validação independente do filtro.
+
+### Ranking equilibrado
+
+A configuração 67399 foi selecionada pelo ranking implementado em `VarreduraFinalFiltros12Casos.m`:
+
+```text
+RankEquilibrado = (RankMedido + RankLorenco + RankGumes) / 3
+```
+
+Os rankings consideram métricas de erro em relação aos valores medidos e aos resultados de Lorenço, além da correspondência na quantidade de gumes.
+
+## Verificação complementar com a NTIA
+
+Essa etapa utiliza apenas o processo base do software, sem aplicação dos filtros desenvolvidos e sem ajuste de parâmetros para aproximação dos valores da NTIA.
+
+| Script | Finalidade |
+|---|---|
+| `GerarRelevosNTIA50.m` | Gera os 50 cenários sintéticos utilizados na comparação com Vogler. |
+| `TesteVerificacaoNTIA50.m` | Realiza a análise dos 50 cenários sintéticos. |
+| `TesteVerificacaoNTIA50Software.m` | Complementa a verificação utilizando o processo base do software. |
+| `GerarRelevosNTIA63Google.m` | Reconstrói os trajetos da 63rd Street utilizando a Google Elevation API. |
+| `TesteVerificacaoNTIAReais.m` | Compara os resultados da 63rd Street com os dados medidos da NTIA. |
+
+As análises utilizam `indexgumess(...,false)` e as funções originais `perdaepstein`, `perdadeygout` e `perdagiovaneli`.
+
+Os resultados da NTIA são tratados como verificação complementar de consistência, e não como uma nova validação do software.
 
 ## Resultados das varreduras
 
-As etapas principais utilizam as pastas:
+As principais saídas são armazenadas em:
 
 ```text
 ResultadosVarredura85/
 ResultadosVarredura12Casos/
 ```
 
-Entre os arquivos utilizados pelas análises posteriores estão:
-
-```text
-ResultadosVarredura85/
-├── PreparacaoVarredura85.mat
-├── VarreduraFinalFiltros85.mat
-└── ResumoTodasConfiguracoes.csv
-```
-
-e:
-
-```text
-ResultadosVarredura12Casos/
-├── PreparacaoVarredura12Casos.mat
-├── ResumoVarredura12CasosSemFresnel.csv
-└── ResumoVarredura12CasosComFresnel.csv
-```
-
-Outros arquivos `.csv`, `.mat` e imagens produzidos pelos testes são resultados derivados e podem ser regenerados executando novamente os respectivos scripts.
-
-Essas saídas não são necessárias como código-fonte do projeto e não precisam ser armazenadas no repositório.
+Arquivos `.csv`, `.mat` e imagens derivados das análises podem ser regenerados executando novamente os respectivos scripts e não precisam ser armazenados como código-fonte do projeto.
 
 ## Ordem de execução
 
-Para reproduzir as varreduras principais dos 85 casos:
+### 85 casos
 
 ```text
 PreparacaoVarredura85.m
@@ -139,20 +132,29 @@ Testes de tendência e seleção
 TesteFiltrosSelecionados85.m
 ```
 
-Para os 12 casos:
+### 12 casos
 
 ```text
 PreparacaoVarredura12Casos.m
         ↓
 VarreduraFinalFiltros12Casos.m
         ↓
-TesteAnaliseRegiao67399.m
-TesteTendenciaFiltros12Casos.m
+Testes de tendência e região
         ↓
 TesteComparacao5Configuracoes12Casos.m
 ```
 
-`TesteFinalSemFiltro.m`, `TesteComparacao85GumesIguais.m` e `TesteDeygoutDavis85.m` correspondem a verificações específicas e podem ser executados separadamente quando seus dados de entrada estiverem disponíveis.
+### NTIA
+
+```text
+GerarRelevosNTIA50.m
+        ↓
+Testes de verificação dos 50 casos
+
+GerarRelevosNTIA63Google.m
+        ↓
+TesteVerificacaoNTIAReais.m
+```
 
 ## Dependências
 
@@ -163,10 +165,10 @@ Os scripts utilizam principalmente:
 - `../DadosSalvos/RelevosLorenco85`;
 - `../dadoslorencocompleto.txt`.
 
-As análises posteriores às varreduras dependem também dos arquivos gerados em `ResultadosVarredura85` ou `ResultadosVarredura12Casos`.
-
 ## Uso de assistência de IA
 
-Este README e os comentários presentes nos códigos foram adicionados ou revisados com auxílio de inteligência artificial, com o objetivo de melhorar a organização, clareza e documentação do projeto.
+Este README e os comentários dos códigos foram adicionados ou revisados com auxílio de inteligência artificial para melhorar a organização e a documentação.
 
-A lógica, os métodos, os parâmetros e as decisões de implementação do código permaneceram sob responsabilidade do autor do projeto.
+O ChatGPT também foi utilizado como ferramenta auxiliar na triagem dos resultados da varredura dos 85 casos. As configurações sugeridas foram posteriormente verificadas diretamente a partir dos resultados gerados no MATLAB.
+
+A lógica, os métodos, os parâmetros, a interpretação dos resultados e as decisões finais permaneceram sob responsabilidade do autor.

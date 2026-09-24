@@ -1,8 +1,8 @@
 # Funções
 
-Esta pasta reúne as funções utilizadas nos scripts do projeto para obtenção e preparação de perfis de terreno, identificação e filtragem de gumes, cálculo de perdas por difração e representação gráfica dos modelos implementados.
+Esta pasta reúne as 29 funções utilizadas nos scripts do projeto para obtenção e preparação de perfis de terreno, identificação e filtragem de gumes, cálculo de perdas por difração e representação gráfica dos modelos implementados.
 
-Os principais métodos de difração considerados são Epstein-Peterson, Deygout e Giovaneli.
+Os métodos de difração considerados são Epstein-Peterson, Deygout e Giovaneli.
 
 ## Aquisição e preparação dos dados
 
@@ -22,11 +22,11 @@ Os principais métodos de difração considerados são Epstein-Peterson, Deygout
 
 - `verificafresnel.m` — verifica a existência de obstruções em 60% da primeira zona de Fresnel e seleciona a obstrução de maior parâmetro `v`.
 
-- `preparageometria.m` — calcula os parâmetros geométricos utilizados pelo processo de filtragem dos gumes, incluindo altura `h`, parâmetro `v`, ângulo e distância.
+- `preparageometria.m` — calcula os parâmetros geométricos utilizados pelo processo de filtragem, incluindo altura `h`, parâmetro `v`, ângulo e distância.
 
 - `aplicafiltrodinamico.m` — aplica o filtro dinâmico aos gumes identificados considerando os limites definidos para `h`, `v`, diferença angular e distância.
 
-- `filtragumes.m` — implementação anterior do processo de filtragem de gumes, mantida para compatibilidade com testes realizados durante o desenvolvimento.
+- `filtragumes.m` — implementação anterior do processo de filtragem, mantida por ter sido utilizada em etapas do desenvolvimento.
 
 ## Modelos de difração
 
@@ -72,7 +72,7 @@ Os principais métodos de difração considerados são Epstein-Peterson, Deygout
 
 - `desenhagumes.m` — destaca graficamente os gumes identificados no perfil.
 
-- `desenharecursaogio.m` — realiza a representação das etapas recursivas da geometria de Giovaneli.
+- `desenharecursaogio.m` — representa as etapas recursivas da geometria de Giovaneli.
 
 - `desenhatriogio.m` — desenha a geometria elementar formada pelos pontos utilizados durante as etapas do método de Giovaneli.
 
@@ -86,7 +86,7 @@ https://github.com/pinxau1000/Matlab-Google-Elevation-API
 
 O código original é distribuído sob a licença MIT e deriva do trabalho anterior `GetElevation`, de Jarek Tuszynski.
 
-Na versão utilizada neste projeto, foi realizada a substituição da função obsoleta `urlread` por `webread`, mantendo a finalidade original da implementação.
+Na versão utilizada neste projeto, a função obsoleta `urlread` foi substituída por `webread`, mantendo a finalidade original da implementação.
 
 Os arquivos de licença e atribuição correspondentes ao código de terceiros devem ser preservados juntamente com o projeto.
 
@@ -100,18 +100,18 @@ Algumas funções utilizam recursos específicos do MATLAB, incluindo:
 - `elevation`
 - `webread`
 
-A disponibilidade dessas funções depende da versão do MATLAB e dos produtos instalados.
+A disponibilidade desses recursos depende da versão do MATLAB e dos produtos instalados.
 
-As funções que utilizam a Google Elevation API recebem a chave da API por meio do parâmetro `API_KEY`. Nenhuma chave de API deve ser armazenada diretamente nos arquivos disponibilizados no repositório.
+As funções que utilizam a Google Elevation API recebem a chave por meio do parâmetro `API_KEY`. Nenhuma chave de API deve ser armazenada diretamente nos arquivos disponibilizados no repositório.
 
 ## Organização
 
-As funções desta pasta são utilizadas pelos scripts de desenvolvimento, testes e validação do projeto.
+As funções desta pasta são utilizadas pelos scripts de desenvolvimento, verificação, calibração e avaliação do projeto.
 
-Algumas implementações foram mantidas por terem sido utilizadas em etapas específicas do desenvolvimento. Arquivos antigos, duplicados ou que não possuem relação com os resultados apresentados no trabalho devem ser mantidos fora desta pasta principal ou removidos antes da publicação definitiva do repositório.
+Algumas implementações anteriores foram mantidas por terem sido utilizadas em etapas específicas do desenvolvimento e nas análises apresentadas no trabalho.
 
 ## Uso de assistência de IA
 
 Este README e os comentários presentes nos códigos foram adicionados ou revisados com auxílio de inteligência artificial, com o objetivo de melhorar a organização, clareza e documentação do projeto.
 
-A lógica, os métodos, os parâmetros e as decisões de implementação do código permaneceram sob responsabilidade do autor do projeto.
+A lógica, os métodos, os parâmetros e as decisões de implementação permaneceram sob responsabilidade do autor do projeto.

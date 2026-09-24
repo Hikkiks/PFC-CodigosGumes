@@ -1,8 +1,8 @@
 # Testes Iniciais
 
-Esta pasta reúne os testes utilizados durante as etapas iniciais de desenvolvimento e validação do projeto. Eles verificam a obtenção e o tratamento dos perfis de relevo, a identificação dos gumes, a consideração das zonas de Fresnel, os cálculos geométricos e os três modelos de difração implementados.
+Esta pasta reúne os testes utilizados durante as etapas iniciais de desenvolvimento e verificação do projeto. Eles analisam a obtenção e o tratamento dos perfis de relevo, a identificação dos gumes, a consideração das zonas de Fresnel, os cálculos geométricos e os três modelos de difração implementados.
 
-A pasta contém 14 scripts MATLAB, totalizando 2.121 linhas de código.
+A pasta contém 14 scripts MATLAB.
 
 ## Testes disponíveis
 
@@ -13,14 +13,14 @@ A pasta contém 14 scripts MATLAB, totalizando 2.121 linhas de código.
 | `TestesElevacoes.m` | Compara os perfis obtidos pela Google Elevation API e pelo MATLAB. |
 | `TesteCurvaturaTerra.m` | Compara o perfil original com o perfil após a correção do raio efetivo da Terra. |
 | `TestesDistancias.m` | Verifica a influência da representação das distâncias na identificação dos gumes nos 12 casos. |
-| `TesteValidacaoCalculoH85.m` | Valida o cálculo da altura relativa `h` utilizada nas geometrias de difração nos 85 perfis. |
+| `TesteValidacaoCalculoH85.m` | Verifica o cálculo da altura relativa `h` utilizada nas geometrias de difração nos 85 perfis. |
 
 ### Identificação de gumes e Fresnel
 
 | Script | Finalidade |
 |---|---|
 | `TesteIndexgumess.m` | Testa visualmente a identificação dos gumes em um perfil de desenvolvimento. |
-| `TesteGumesCasoIndividual.m` | Permite analisar individualmente a identificação de gumes em um dos 12 casos de campo. |
+| `TesteGumesCasoIndividual.m` | Permite analisar individualmente a identificação de gumes em um dos 12 casos medidos em campo. |
 | `TesteComparacaoAlgoritmosGumes.m` | Compara `indexgumess` com o algoritmo `traca_caminho` utilizado por Lorenço. |
 | `TesteComparacaoComSemFresnel.m` | Compara a identificação de gumes com e sem a verificação adicional da zona de Fresnel. |
 
@@ -40,7 +40,9 @@ A pasta contém 14 scripts MATLAB, totalizando 2.121 linhas de código.
 | `TesteComparacao85SemFiltro.m` | Compara os três modelos e a quantidade de gumes com os resultados de Lorenço nos 85 perfis, sem aplicação de filtros. |
 | `TesteComparacaoElevacoes85.m` | Analisa os casos em que a quantidade de gumes identificada é igual à registrada por Lorenço. |
 
-Neste último teste, a igualdade se refere à **quantidade de gumes**, não necessariamente aos mesmos índices ou posições.
+Neste último teste, a igualdade se refere à quantidade de gumes, não necessariamente aos mesmos índices ou posições.
+
+Os nomes de alguns arquivos mantêm o termo `Validacao` por corresponderem à nomenclatura adotada durante o desenvolvimento, embora essas etapas sejam tratadas no trabalho final como verificações.
 
 ## Organização dos dados
 
@@ -86,6 +88,8 @@ DadosConclusaoE1P1.mat ... DadosConclusaoE1P6.mat
 DadosConclusaoE2P1.mat ... DadosConclusaoE2P6.mat
 ```
 
+Esses perfis são utilizados principalmente nos testes relacionados à identificação dos gumes e às comparações com os casos medidos em campo.
+
 ### `DadosSalvos/RelevosLorenco85`
 
 Contém os 85 perfis utilizados nas comparações com os resultados de Lorenço:
@@ -97,7 +101,7 @@ DadosElevLorenco2.mat
 DadosElevLorenco85.mat
 ```
 
-A numeração deve permanecer associada à ordem dos registros de `dadoslorencocompleto.txt`.
+A numeração permanece associada à ordem dos registros de `dadoslorencocompleto.txt`.
 
 ## Formato de `dadoslorencocompleto.txt`
 
@@ -118,7 +122,7 @@ O arquivo é lido com:
 dados=textscan(arquivo,'%s %s %s %s %s %f');
 ```
 
-Os resultados dos modelos são convertidos para valores numéricos após a substituição da vírgula decimal por ponto:
+Os resultados armazenados como texto são convertidos para valores numéricos após a substituição da vírgula decimal por ponto:
 
 ```matlab
 epsteinlorenco=str2double(strrep(dados{3},',','.'));
@@ -127,11 +131,13 @@ giovanelilorenco=str2double(strrep(dados{5},',','.'));
 gumeslorenco=dados{6};
 ```
 
-A linha `i` desse arquivo corresponde ao perfil:
+A linha correspondente ao caso `i` está associada ao perfil:
 
 ```text
 DadosSalvos/RelevosLorenco85/DadosElevLorenco<i>.mat
 ```
+
+Essa associação deve ser preservada nos testes que utilizam os resultados de Lorenço como referência.
 
 ## Dependências
 
@@ -150,4 +156,4 @@ Os testes são, em geral, independentes e não possuem uma ordem obrigatória de
 
 Este README e os comentários presentes nos códigos foram adicionados ou revisados com auxílio de inteligência artificial, com o objetivo de melhorar a organização, clareza e documentação do projeto.
 
-A lógica, os métodos, os parâmetros e as decisões de implementação do código permaneceram sob responsabilidade do autor do projeto.
+A lógica, os métodos, os parâmetros e as decisões de implementação permaneceram sob responsabilidade do autor do projeto.
